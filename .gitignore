@@ -1,0 +1,5 @@
+_build
+_bin
+.vs
+.astro.sln
+premake5.exe
