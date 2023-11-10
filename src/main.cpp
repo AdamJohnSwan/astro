@@ -1,22 +1,9 @@
+module;
 #include <raylib.h>
 #include <memory>
 
-#include "main.h"
-#include "interfaces/scene.h"
-#include "scenes/LogoScreen.h"
-#include "routes/router.h"
-
-
-Font font = {
-    0
-};
-Music music = {
-    { nullptr }
-};
-Sound fxCoin = {
-    { nullptr }
-};
-Router router = Router();
+module Main;
+import Router;
 
 namespace 
 {

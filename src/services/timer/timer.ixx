@@ -1,10 +1,8 @@
-#ifndef TIMER_H
-#define TIMER_H
-
-
+module;
 #include <map>
 #include <string>
 
+export module TimerService;
 /// <summary>
 /// Timer with a life time in seconds
 /// </summary>
@@ -13,7 +11,7 @@ typedef struct Timer
     float Lifetime;
 } Timer;
 
-class TimerService
+export class TimerService
 {
 private:
     std::map<std::string, Timer> TimerDictionary;
@@ -27,5 +25,3 @@ public:
 
     float TimeLeft(std::string name);
 };
-
-#endif // !TIMER_H

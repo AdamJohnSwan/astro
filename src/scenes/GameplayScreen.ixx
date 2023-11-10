@@ -1,9 +1,9 @@
-#ifndef GAMEPLAYSCREEN_H
-#define GAMEPLAYSCREEN_H
+module;
 
-#include "interfaces/scene.h"
+export module GameplayScreen;
+import Scene;
 
-class GameplayScreen : public Scene
+export class GameplayScreen : public Scene
 {
 private:
 	int framesCounter;
@@ -15,5 +15,3 @@ public:
 	void Draw() override;
 	void Unload() override;
 };
-
-#endif

@@ -1,8 +1,9 @@
+module;
 #include <raylib.h>
 
-#include "EndingScreen.h"
-#include "main.h"
-#include "GameplayScreen.h"
+module EndingScreen;
+import Router;
+import Main;
 
 EndingScreen::EndingScreen()
 {

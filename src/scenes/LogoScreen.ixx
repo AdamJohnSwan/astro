@@ -1,10 +1,10 @@
-#ifndef LOGOSCREEN_H
-#define LOGOSCREEN_H
+module;
 
-#include "interfaces/scene.h"
-#include "services/timer/timer.h"
+export module LogoScreen;
+import Scene;
+import TimerService;
 
-class LogoScreen : public Scene
+export class LogoScreen : public Scene
 {
 private:
 	int framesCounter;
@@ -33,5 +33,3 @@ public:
 	void Draw() override;
 	void Unload() override;
 };
-
-#endif // !LOGOSCREEN_H

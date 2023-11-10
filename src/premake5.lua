@@ -15,12 +15,7 @@ project (workspaceName)
 			entrypoint "mainCRTStartup"
 	filter {}
 	
-	vpaths 
-	{
-	  ["Header Files/*"] = { "include/**.h",  "include/**.hpp", "src/**.h", "src/**.hpp", "**.h", "**.hpp"},
-	  ["Source Files/*"] = {"src/**.c", "src/**.cpp","**.c", "**.cpp"},
-	}
-	files {"**.c", "**.cpp", "**.h", "**.hpp"}
+	files {"**.c", "**.cpp", "**.h", "**.hpp", "**.ixx"}
 
     includedirs { "./" }
     includedirs { "src" }

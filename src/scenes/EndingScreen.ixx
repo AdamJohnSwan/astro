@@ -1,9 +1,9 @@
-#ifndef ENDINGSCREEN_H
-#define ENDINGSCREEN_H
+module;
 
-#include "interfaces/scene.h"
+export module EndingScreen;
+import Scene;
 
-class EndingScreen : public Scene
+export class EndingScreen : public Scene
 {
 private:
     int frameCounter;
@@ -15,5 +15,3 @@ public:
     void Draw() override;
     void Unload() override;
 };
-
-#endif

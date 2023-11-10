@@ -1,8 +1,8 @@
+module;
 #include <raylib.h>
 
-#include "GameplayScreen.h"
-#include "main.h"
-#include "EndingScreen.h"
+module GameplayScreen;
+import Main;
 
 GameplayScreen::GameplayScreen()
 {

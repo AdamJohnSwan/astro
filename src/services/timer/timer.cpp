@@ -1,6 +1,9 @@
+module;
 #include <raylib.h>
+#include <string>
+#include <map>
 
-#include "timer.h"
+module TimerService;
 
 void TimerService::StartTimer(std::string name, float lifetime)
 {

@@ -1,18 +1,18 @@
-#ifndef SCREENS_H
-#define SCREENS_H
-
+module;
 #include <raylib.h>
 
-#include "interfaces/scene.h"
-#include "routes/router.h"
-
+export module Main;
+import Router;
 //----------------------------------------------------------------------------------
 // Global Variables Declaration (shared by several modules)
 //----------------------------------------------------------------------------------
-extern Font font;
-extern Music music;
-extern Sound fxCoin;
-
-extern Router router;
-
-#endif 
+export Font font = {
+    0
+};
+export Music music = {
+    { nullptr }
+};
+export Sound fxCoin = {
+    { nullptr }
+};
+export Router router = Router();

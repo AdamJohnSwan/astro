@@ -46,7 +46,7 @@ workspace (workspaceName)
 	startproject(workspaceName)
 
     cdialect "C99"
-    cppdialect "C++17"
+    cppdialect "C++20"
 
 include ("raylib_premake5.lua")
 include ("src")

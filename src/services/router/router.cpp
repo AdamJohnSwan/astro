@@ -1,12 +1,10 @@
+module;
 #include <string>
 #include <memory>
 #include <stdexcept>
 #include <raylib.h>
-#include <gsl>
 
-#include "router.h"
-#include "interfaces/scene.h"
-
+module Router;
 
 void Router::SetRoute(RoutePaths::Path path)
 {
@@ -17,7 +15,7 @@ void Router::SetRoute(RoutePaths::Path path)
 	newScene->Load();
 }
 
-gsl::not_null<Scene*> Router::GetCurrentScene()
+Scene* Router::GetCurrentScene()
 {
 	switch (currentRoute)
 	{

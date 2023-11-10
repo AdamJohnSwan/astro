@@ -1,7 +1,7 @@
-#ifndef SCENE_H
-#define SCENE_H
+module;
+export module Scene;
 
-class Scene
+export class Scene
 {
 public:
 	virtual void Load() = 0;
@@ -9,5 +9,3 @@ public:
 	virtual void Draw() = 0;
 	virtual void Unload() = 0;
 };
-
-#endif 

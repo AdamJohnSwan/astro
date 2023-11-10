@@ -1,10 +1,8 @@
+module;
 #include <raylib.h>
 
-#include "LogoScreen.h"
-#include "GameplayScreen.h"
-#include "main.h"
-#include "services/timer/timer.h"
-
+module LogoScreen;
+import Main;
 
 LogoScreen::LogoScreen()
 {
