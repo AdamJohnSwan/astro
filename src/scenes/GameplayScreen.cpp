@@ -3,30 +3,24 @@ module;
 
 module GameplayScreen;
 import Main;
+import Enums;
 
-GameplayScreen::GameplayScreen()
+GameplayScreen::GameplayScreen(ServiceContainer& serviceContainer) : Scene(serviceContainer)
 {
-    framesCounter = 0;
-}
-
-GameplayScreen::~GameplayScreen()
-{
-
 }
 
 void GameplayScreen::Load()
 {
-
+    font = LoadFont("resources/mecha.png");
+    fxCoin = LoadSound("resources/coin.wav");
 }
 
 void GameplayScreen::Update()
 {
-    // TODO: Update ENDING screen variables here!
-
     // Press enter or tap to return to TITLE screen
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
     {
-        router.SetRoute(RoutePaths::ENDING);
+        serviceContainer.router.SetRoute(RoutePaths::ENDING);
         PlaySound(fxCoin);
     }
 }
@@ -41,5 +35,6 @@ void GameplayScreen::Draw()
 
 void GameplayScreen::Unload()
 {
-    // TODO: Unload ENDING screen variables here!
+    UnloadFont(font);
+    UnloadSound(fxCoin);
 }

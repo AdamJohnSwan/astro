@@ -2,17 +2,17 @@ module;
 #include <raylib.h>
 
 export module Main;
-import Router;
-//----------------------------------------------------------------------------------
-// Global Variables Declaration (shared by several modules)
-//----------------------------------------------------------------------------------
-export Font font = {
-    0
+import ServiceContainer;
+import Base;
+
+class Main
+{
+private:
+    ServiceContainer& serviceContainer;
+    Base& baseScene;
+public:
+    int Run();
+    Main(ServiceContainer& serviceContainer, Base& baseScene);
 };
-export Music music = {
-    { nullptr }
-};
-export Sound fxCoin = {
-    { nullptr }
-};
-export Router router = Router();
+
+export int main();

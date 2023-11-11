@@ -3,9 +3,9 @@ module;
 #include <string>
 #include <map>
 
-module TimerService;
+module TimerFactory;
 
-void TimerService::StartTimer(std::string name, float lifetime)
+void TimerFactory::StartTimer(std::string name, float lifetime)
 {
 	if (TimerDictionary.count(name) == 0)
 	{
@@ -16,7 +16,7 @@ void TimerService::StartTimer(std::string name, float lifetime)
 	}
 }
 
-void TimerService::UpdateTimers()
+void TimerFactory::UpdateTimers()
 {
 	std::map<std::string, Timer>::iterator it = TimerDictionary.begin();
 	while (it != TimerDictionary.end())
@@ -39,7 +39,7 @@ void TimerService::UpdateTimers()
 /// </summary>
 /// <param name="name">Name of the timer</param>
 /// <returns></returns>
-float TimerService::TimeLeft(std::string name)
+float TimerFactory::TimeLeft(std::string name) const
 {
 	if (TimerDictionary.count(name) > 0)
 	{

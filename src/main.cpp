@@ -1,49 +1,66 @@
 module;
 #include <raylib.h>
 #include <memory>
+#include <di.hpp>
 
 module Main;
+import Config;
+import Enums;
+import ITimerFactory;
+import TimerFactory;
 import Router;
+import IRouter;
+import ServiceContainer;
 
-namespace 
+Main::Main(ServiceContainer& serviceContainer, Base& baseScene) :
+    serviceContainer(serviceContainer), baseScene(baseScene)
 {
-    static constexpr int screenWidth = 800;
-    static constexpr int screenHeight = 450;
+
 }
 
-
-int main(void)
+int Main::Run()
 {
-
     SetConfigFlags(FLAG_VSYNC_HINT);
-    SetTargetFPS(144);
-    InitWindow(screenWidth, screenHeight, "raylib game template");
+    const Config& config = GetConfig();
+    SetTargetFPS(config.fps);
+    InitWindow(config.screenWidth, config.screenHeight, "raylib game template");
 
     InitAudioDevice();
+    Music music = LoadMusicStream("resources/ambient.ogg");
 
-    font = LoadFont("resources/mecha.png");
-    music = LoadMusicStream("resources/ambient.ogg");
-    fxCoin = LoadSound("resources/coin.wav");
-
-    SetMusicVolume(music, 0.0f);
+    SetMusicVolume(music, 0.5f);
     PlayMusicStream(music);
 
-    router.SetRoute(RoutePaths::LOGO);
-
-
+    IRouter& router = serviceContainer.router;
+    ITimerFactory& timerFactory = serviceContainer.timerFactory;
+    baseScene.Load();
     while (!WindowShouldClose())
     {
+        timerFactory.UpdateTimers();
         UpdateMusicStream(music);
-        router.RenderRoute();
+        baseScene.Update();
+        baseScene.Draw();
     }
 
-    UnloadFont(font);
     UnloadMusicStream(music);
-    UnloadSound(fxCoin);
 
     CloseAudioDevice();
 
     CloseWindow();
 
     return 0;
+
+}
+
+int main(void)
+{
+
+    namespace di = boost::di;
+    auto injector = di::make_injector(
+        di::bind<ITimerFactory>.to<TimerFactory>(),
+        di::bind<IRouter>.to<Router>()
+    );
+    auto app = injector.create<Main>();
+
+    return app.Run();
 }

@@ -2,7 +2,9 @@ module;
 
 export module LogoScreen;
 import Scene;
-import TimerService;
+import ServiceContainer;
+import ITimerFactory;
+import IRouter;
 
 export class LogoScreen : public Scene
 {
@@ -23,11 +25,8 @@ private:
 	int state;
 	float alpha;
 
-	TimerService timerService;
-
 public:
-	LogoScreen();
-	virtual ~LogoScreen();
+	LogoScreen(ServiceContainer& serviceContainer);
 	void Load() override;
 	void Update() override;
 	void Draw() override;

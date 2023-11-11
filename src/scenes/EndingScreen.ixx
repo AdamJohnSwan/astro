@@ -1,15 +1,18 @@
 module;
+#include <raylib.h>
 
 export module EndingScreen;
 import Scene;
+import IRouter;
+import ServiceContainer;
 
 export class EndingScreen : public Scene
 {
 private:
-    int frameCounter;
+    Font font = { 0 };
+    Sound fxCoin = { 0 };
 public:
-    EndingScreen();
-    virtual ~EndingScreen();
+    EndingScreen(ServiceContainer& serviceContainer);
     void Load() override;
     void Update() override;
     void Draw() override;

@@ -2,7 +2,8 @@ module;
 #include <map>
 #include <string>
 
-export module TimerService;
+export module TimerFactory;
+import ITimerFactory;
 /// <summary>
 /// Timer with a life time in seconds
 /// </summary>
@@ -11,7 +12,7 @@ typedef struct Timer
     float Lifetime;
 } Timer;
 
-export class TimerService
+export class TimerFactory : public ITimerFactory
 {
 private:
     std::map<std::string, Timer> TimerDictionary;
@@ -23,5 +24,5 @@ public:
     /// </summary>
     void UpdateTimers();
 
-    float TimeLeft(std::string name);
+    float TimeLeft(std::string name) const;
 };

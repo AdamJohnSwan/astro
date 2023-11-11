@@ -2,22 +2,17 @@ module;
 #include <raylib.h>
 
 module EndingScreen;
-import Router;
-import Main;
+import IRouter;
+import Enums;
 
-EndingScreen::EndingScreen()
+EndingScreen::EndingScreen(ServiceContainer& serviceContainer) : Scene(serviceContainer)
 {
-    frameCounter = 0;
-}
-
-EndingScreen::~EndingScreen()
-{
-
 }
 
 void EndingScreen::Load()
 {
-	
+    font = LoadFont("resources/mecha.png");
+    fxCoin = LoadSound("resources/coin.wav");
 }
 
 void EndingScreen::Update()
@@ -28,7 +23,7 @@ void EndingScreen::Update()
     if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
     {
         PlaySound(fxCoin);
-        router.SetRoute(RoutePaths::GAMEPLAY);
+        serviceContainer.router.SetRoute(RoutePaths::GAMEPLAY);
     }
 }
 
@@ -44,5 +39,6 @@ void EndingScreen::Draw()
 
 void EndingScreen::Unload()
 {
-    // TODO: Unload ENDING screen variables here!
+    UnloadFont(font);
+    UnloadSound(fxCoin);
 }

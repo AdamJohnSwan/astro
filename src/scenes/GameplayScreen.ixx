@@ -1,15 +1,17 @@
 module;
+#include <raylib.h>
 
 export module GameplayScreen;
 import Scene;
+import IRouter;
 
 export class GameplayScreen : public Scene
 {
 private:
-	int framesCounter;
+	Font font = { 0 };
+	Sound fxCoin = { 0 };
 public:
-	GameplayScreen();
-	virtual ~GameplayScreen();
+	GameplayScreen(ServiceContainer& serviceContainer);
 	void Load() override;
 	void Update() override;
 	void Draw() override;

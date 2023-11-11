@@ -2,9 +2,9 @@ module;
 #include <raylib.h>
 
 module LogoScreen;
-import Main;
+import Enums;
 
-LogoScreen::LogoScreen()
+LogoScreen::LogoScreen(ServiceContainer& serviceContainer) : Scene(serviceContainer)
 {
     framesCounter = 0;
 
@@ -21,13 +21,6 @@ LogoScreen::LogoScreen()
 
     state = 0;
     alpha = 1.0f;
-
-    timerService = TimerService();
-}
-
-LogoScreen::~LogoScreen()
-{
-
 }
 
 void LogoScreen::Load()
@@ -45,69 +38,67 @@ void LogoScreen::Load()
 
     state = 0;
     alpha = 1.0f;
-
-    timerService.StartTimer("state0", 1);
+    serviceContainer.timerFactory.StartTimer("state0", 1);
 }
 
-//  Screen Update logic
 void LogoScreen::Update()
-{
-    timerService.UpdateTimers();
+{   
+    ITimerFactory& timerFactory = serviceContainer.timerFactory;
     if (state == 0)                 // State 0: Top-left square corner blink logic
     {
         // First, a second before showing anything
-        if (timerService.TimeLeft("state0") == 0)
+        if (timerFactory.TimeLeft("state0") == 0)
         {
-            timerService.StartTimer("state1", 2);
+            timerFactory.StartTimer("state1", 2);
             state = 1;
         }
     }
     else if (state == 1)            // State 1: Bars animation logic: top and left
     {
-        float timeLeft = timerService.TimeLeft("state1");
-        topSideRecWidth = 256 * ((1 - timeLeft) / 1);
-        leftSideRecHeight = 256 * ((1 - timeLeft) / 1);
+        float timeLeft = timerFactory.TimeLeft("state1");
+        topSideRecWidth = static_cast<int>(256.0 * ((1.0 - timeLeft) / 1.0));
+        leftSideRecHeight = static_cast<int>(256.0 * ((1.0 - timeLeft) / 1.0));
 
         if (timeLeft == 0)
         {
-            timerService.StartTimer("state2", 1);
+            timerFactory.StartTimer("state2", 1);
             state = 2;
         }
     }
     else if (state == 2)            // State 2: Bars animation logic: bottom and right
     {
-        float timeLeft = timerService.TimeLeft("state2");
-        bottomSideRecWidth = 256 * ((1 - timeLeft) / 1);
-        rightSideRecHeight = 256 * ((1 - timeLeft) / 1);
+        float timeLeft = timerFactory.TimeLeft("state2");
+        bottomSideRecWidth = static_cast<int>(256.0 * ((1.0 - timeLeft) / 1.0));
+        rightSideRecHeight = static_cast<int>(256.0 * ((1.0 - timeLeft) / 1.0));
 
         if (timeLeft == 0)
         {
-            timerService.StartTimer("letterCounter", 0.2);
+            timerFactory.StartTimer("letterCounter", 0.2f);
             state = 3;
         }
     }
     else if (state == 3)            // State 3: "raylib" text-write animation logic
     {
-        if (timerService.TimeLeft("letterCounter") == 0)
+        if (timerFactory.TimeLeft("letterCounter") == 0)
         {
             lettersCount++;
-            timerService.StartTimer("letterCounter", 0.2);
+            timerFactory.StartTimer("letterCounter", 0.2f);
         }
         if (lettersCount == 10)
         {
-            timerService.StartTimer("fadeOutTimer", 0.5);
+            timerFactory.StartTimer("fadeOutTimer", 0.5f);
             state = 4;
         }
     }
     else if (state = 4)
     {
-        float timeLeft = timerService.TimeLeft("fadeOutTimer");
+        float timeLeft = timerFactory.TimeLeft("fadeOutTimer");
         alpha = timeLeft / 0.5f;
 
         if (timeLeft == 0)
         {
             alpha = 0.0f;
-            router.SetRoute(RoutePaths::GAMEPLAY);
+            serviceContainer.router.SetRoute(RoutePaths::GAMEPLAY);
         }
     }
 }
