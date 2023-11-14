@@ -11,3 +11,14 @@ namespace RoutePaths
 		ENDING
 	};
 }
+
+namespace Events
+{
+	export enum EventType
+	{
+		UNKNOWN = 0,
+		SCENE_ENDED,
+		CLICK,
+		LAST
+	};
+}

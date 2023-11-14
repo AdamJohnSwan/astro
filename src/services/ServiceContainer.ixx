@@ -2,14 +2,14 @@ module;
 
 export module ServiceContainer;
 import ITimerFactory;
-import IRouter;
+import IMediator;
 
 export class ServiceContainer
 {
 public:
-	ServiceContainer(ITimerFactory& tf, IRouter& r) : timerFactory(tf), router(r)
-	{}
+	ServiceContainer(ITimerFactory& tf, IMediator& m) : timerFactory(tf), mediator(m)
+	{
+	}
 	ITimerFactory& timerFactory;
-	IRouter& router;
-
+	IMediator& mediator;
 };

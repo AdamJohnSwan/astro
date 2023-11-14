@@ -4,8 +4,8 @@ export module Config;
 
 export struct Config
 {
-	int screenWidth = 450;
-	int screenHeight = 800;
+	int screenWidth = 800;
+	int screenHeight = 450;
 	int fps = 60;
 };
 

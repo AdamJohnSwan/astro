@@ -8,8 +8,8 @@ import Config;
 import Enums;
 import ITimerFactory;
 import TimerFactory;
-import Router;
-import IRouter;
+import Mediator;
+import IMediator;
 import ServiceContainer;
 
 Main::Main(ServiceContainer& serviceContainer, Base& baseScene) :
@@ -28,10 +28,9 @@ int Main::Run()
     InitAudioDevice();
     Music music = LoadMusicStream("resources/ambient.ogg");
 
-    SetMusicVolume(music, 0.5f);
+    SetMusicVolume(music, 1.0f);
     PlayMusicStream(music);
 
-    IRouter& router = serviceContainer.router;
     ITimerFactory& timerFactory = serviceContainer.timerFactory;
     baseScene.Load();
     while (!WindowShouldClose())
@@ -41,6 +40,8 @@ int Main::Run()
         baseScene.Update();
         baseScene.Draw();
     }
+
+    baseScene.Unload();
 
     UnloadMusicStream(music);
 
@@ -58,7 +59,7 @@ int main(void)
     namespace di = boost::di;
     auto injector = di::make_injector(
         di::bind<ITimerFactory>.to<TimerFactory>(),
-        di::bind<IRouter>.to<Router>()
+        di::bind<IMediator>.to<Mediator>()
     );
     auto app = injector.create<Main>();
 
