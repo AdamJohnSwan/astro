@@ -2,19 +2,19 @@ module;
 #include <raylib.h>
 
 export module GameplayScreen;
-import Scene;
+import Node;
 import IMediator;
 
-export class GameplayScreen : public Scene,  IPublisher
+export class GameplayScreen : public Node,  IPublisher
 {
 private:
 	Font font = { 0 };
 public:
-    GameplayScreen(ServiceContainer& serviceContainer) : Scene(serviceContainer)
+    GameplayScreen(ServiceContainer& serviceContainer) : Node(serviceContainer)
     {
     
     }
-    const char* GetSceneName() override
+    const char* GetNodeName() override
     {
         return "GameplayScreen";
     }
@@ -26,7 +26,7 @@ public:
     {
         if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
         {
-            Data data = Data(*this, GetSceneName());
+            Data data = Data(*this, GetNodeName());
             serviceContainer.mediator.Publish(Events::CLICK, data);
         }
     }

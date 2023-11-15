@@ -2,19 +2,19 @@ module;
 #include <raylib.h>
 
 export module EndingScreen;
-import Scene;
+import Node;
 import IMediator;
 import ServiceContainer;
 
-export class EndingScreen : public Scene, IPublisher
+export class EndingScreen : public Node, IPublisher
 {
 private:
     Font font = { 0 };
 public:
-    EndingScreen(ServiceContainer& serviceContainer) : Scene(serviceContainer) {
+    EndingScreen(ServiceContainer& serviceContainer) : Node(serviceContainer) {
     
     }
-    const char* GetSceneName() override
+    const char* GetNodeName() override
     {
         return "EndingScreen";
     }
@@ -26,7 +26,7 @@ public:
     {
         if (IsKeyPressed(KEY_ENTER) || IsGestureDetected(GESTURE_TAP))
         {
-            Data data = Data(*this, GetSceneName());
+            Data data = Data(*this, GetNodeName());
             serviceContainer.mediator.Publish(Events::CLICK, data);
         }
     }

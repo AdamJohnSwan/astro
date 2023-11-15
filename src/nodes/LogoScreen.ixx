@@ -2,12 +2,12 @@ module;
 #include <raylib.h>
 
 export module LogoScreen;
-import Scene;
+import Node;
 import ServiceContainer;
 import ITimerFactory;
 import IMediator;
 
-export class LogoScreen : public Scene, IPublisher
+export class LogoScreen : public Node, IPublisher
 {
 private:
 	int framesCounter;
@@ -27,7 +27,7 @@ private:
 	float alpha;
 
 public:
-	LogoScreen(ServiceContainer& serviceContainer) : Scene(serviceContainer)
+	LogoScreen(ServiceContainer& serviceContainer) : Node(serviceContainer)
 	{
 		framesCounter = 0;
 

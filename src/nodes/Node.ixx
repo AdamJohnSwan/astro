@@ -1,17 +1,17 @@
 module;
 #include <memory>
-export module Scene;
+export module Node;
 
 import ServiceContainer;
 
-export class Scene
+export class Node
 {
 protected:
 	ServiceContainer& serviceContainer;
 public:
-	Scene(ServiceContainer& serviceContainer) : serviceContainer(serviceContainer) {
+	Node(ServiceContainer& serviceContainer) : serviceContainer(serviceContainer) {
 	}
-	virtual const char* GetSceneName()
+	virtual const char* GetNodeName()
 	{
 		return typeid(this).name();
 	}
