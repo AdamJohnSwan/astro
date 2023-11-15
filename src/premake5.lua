@@ -20,7 +20,6 @@ project (workspaceName)
     includedirs { "./" }
     includedirs { "src" }
     includedirs { "include" }
-	includedirs {"../deps/gsl" }
 	includedirs {"../deps/di" }
 	
 	link_raylib()
