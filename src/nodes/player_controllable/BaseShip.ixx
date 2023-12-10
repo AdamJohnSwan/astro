@@ -1,7 +1,10 @@
 module;
 #include <raylib.h>
+#include <rcamera.h>
 #include <raymath.h>
-#include <rlgl.h>
+#include <string>
+#include <rcamera.h>
+#include <iostream>
 
 export module BaseShip;
 import Node;
@@ -11,10 +14,7 @@ export class BaseShip : public Node
 private:
 	Model ship = { 0 };
 	Texture2D texture = { 0 };
-	float pitch = 0.0f;
-	float roll = 0.0f;
-	float yaw = 0.0f;
-	Vector3 shipPos = { 0.0f, -8.0f, 0.0f };
+	Vector3 shipPos = { 0.0f, 0.0f, 0.0f };
 public:
 	BaseShip(ServiceContainer& serviceContainer) : Node(serviceContainer) {
 	}
@@ -24,43 +24,46 @@ public:
 	}
 	void Load() override
 	{
-		serviceContainer.camera.SetUseCamera(true);
+		ship = LoadModel("resources/models/shuttle.glb");
+		ship.transform = MatrixRotateXYZ({ 0, DEG2RAD * 90, DEG2RAD * 90 });
 	};
 	void Update() override
 	{
+		float pitch = 0.0f;
+		float roll = 0.0f;
+		float yaw = 0.0f;
+
+		float forward = 0.0f;
+
 		if (IsKeyDown(KEY_W))
 		{
-			shipPos.z += 0.6f;
+			forward += 0.6f;
 		}
-
+		else if (IsKeyDown(KEY_S))
+		{
+			forward -= 0.6f;
+		}
+		
 		if (IsKeyDown(KEY_DOWN)) pitch += 0.6f;
 		else if (IsKeyDown(KEY_UP)) pitch -= 0.6f;
 
-		if (IsKeyDown(KEY_S)) yaw -= 1.0f;
-		else if (IsKeyDown(KEY_A)) yaw += 1.0f;
+		if (IsKeyDown(KEY_E)) yaw -= 1.0f;
+		else if (IsKeyDown(KEY_Q)) yaw += 1.0f;
 
 		if (IsKeyDown(KEY_LEFT)) roll -= 1.0f;
 		else if (IsKeyDown(KEY_RIGHT)) roll += 1.0f;
 
-		ship.transform = MatrixRotateXYZ({ DEG2RAD* pitch, DEG2RAD* yaw, DEG2RAD* roll });
-		const Camera3D& camera = serviceContainer.camera.GetCamera3d();
-		Vector3 newPos = { camera.position.x, camera.position.y, shipPos.z - 120.0f};
-		serviceContainer.camera.UpdateCamera3d(newPos, shipPos, camera.up);
+		ship.transform = MatrixMultiply(MatrixRotateXYZ({ DEG2RAD * yaw, DEG2RAD * roll, DEG2RAD * pitch }), ship.transform);
+		serviceContainer.camera.FollowTarget(shipPos, { yaw, pitch, roll });
 	}
 	void Draw() override
 	{
-		rlPushMatrix();
-		rlRotatef(pitch, 1, 0, 0);
-		rlRotatef(yaw, 0, 1, 0);
-		rlRotatef(roll, 0, 0, 1);
-		DrawCube(shipPos, 25.0f, 25.0f, 50.0f, BLUE);
-
-		Vector3 wingsPos = { shipPos.x, shipPos.y, shipPos.z };
-		DrawCube(wingsPos, 80.0f, 15.0f, 25.0f, RED);
-		rlPopMatrix();
+		BeginMode3D(serviceContainer.camera.GetCamera3d());
+		DrawModel(ship, shipPos, 10.0f, RED);
+		EndMode3D();
 	}
 	void Unload() override
 	{
-		serviceContainer.camera.SetUseCamera(false);
+		UnloadModel(ship);
 	}
 };

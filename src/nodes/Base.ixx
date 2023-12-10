@@ -42,19 +42,9 @@ public:
 	{
 		BeginDrawing();
 		ClearBackground(WHITE);
-		// save a variable because the value returned by this function can change in the Update call.
-		bool cameraInUse = serviceContainer.camera.UseCamera();
-		if (cameraInUse)
-		{
-			BeginMode3D(serviceContainer.camera.GetCamera3d());
-		}
 		if (currentScene != nullptr)
 		{
 			currentScene->Draw();
-		}
-		if (cameraInUse)
-		{
-			EndMode3D();
 		}
 		EndDrawing();
 	}

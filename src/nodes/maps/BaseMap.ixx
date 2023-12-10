@@ -29,7 +29,9 @@ public:
 	void Draw() override
 	{
 		baseShip.Draw();
-		DrawGrid(10, 10.0f);
+		BeginMode3D(serviceContainer.camera.GetCamera3d());
+		DrawGrid(100, 10.0f);
+		EndMode3D();
 	}
 	void Unload() override
 	{
